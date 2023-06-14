@@ -11,37 +11,23 @@ clothesRouter.post('/clothes',createClothe);
 
 
 async function getClothes(req,res) {
-    let clothesResult=await Clothes.findAll();
+    let clothesResult=await Clothes.read();
     res.status(200).json(clothesResult);
 }
 async function getOneClothe(req,res) {
     let idClothe=req.params.id;
-    let clothesResult=await Clothes.findOne({
-        where: {
-            id: idClothe
-        }
-    });
+    let clothesResult=await Clothes.read(idClothe);
     res.status(200).json(clothesResult);
 }
 async function updateClothe(req,res) {
     let idClothe=req.params.id;
     let updateClothe=req.body
-    let clothesResult=await Clothes.findOne({
-        where: {
-            id: idClothe
-        }
-    });
-    let updateResult= await clothesResult.update(updateClothe);
+    let clothesResult=await Clothes.update(updateClothe,idClothe);
     res.status(201).json(clothesResult);
 }
 async function deleteClothe(req,res) {
     let idClothe=req.params.id;
-    let clothesResult=await Clothes.destroy({
-        where: {
-            id: idClothe
-        }
-    });
-
+    let clothesResult=await Clothes.delete(idClothe);
     res.status(204).json(clothesResult);
 }
 async function createClothe(req,res) {
