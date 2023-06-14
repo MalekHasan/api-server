@@ -11,36 +11,23 @@ foodRouter.post('/food',createFood);
 
 
 async function getFood(req,res) {
-    let foodResult=await Food.findAll();
+    let foodResult=await Food.read();
     res.status(200).json(foodResult);
 }
 async function getOneFood(req,res) {
     let idFood=req.params.id;
-    let foodResult=await Food.findOne({
-        where: {
-            id: idFood
-        }
-    });
+    let foodResult=await Food.read(idFood);
     res.status(200).json(foodResult);
 }
 async function updateFood(req,res) {
     let idFood=req.params.id;
     let updateFood=req.body
-    let foodResult=await Food.findOne({
-        where: {
-            id: idFood
-        }
-    });
-    let updateResult= await foodResult.update(updateFood);
-    res.status(201).json(updateResult);
+    let foodResult=await Food.update(updateFood,idFood);
+    res.status(201).json(foodResult);
 }
 async function deleteFood(req,res) {
     let idFood=req.params.id;
-    let foodResult=await Food.destroy({
-        where: {
-            id: idFood
-        }
-    });
+    let foodResult=await Food.delete(idFood);
     res.status(204).json(foodResult);
 }
 async function createFood(req,res) {
